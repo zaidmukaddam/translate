@@ -2,13 +2,14 @@ import 'package:arna/arna.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:translate/splash.dart';
 
 import '/providers.dart';
+import '/utils/storage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SharedStorage.instance.initialize();
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -20,7 +21,7 @@ class MyApp extends ConsumerStatefulWidget {
 }
 
 class _MyAppState extends ConsumerState<MyApp> {
-  late SharedPreferences preferences;
+  final SharedStorage storage = SharedStorage.instance;
 
   @override
   void initState() {
@@ -29,9 +30,8 @@ class _MyAppState extends ConsumerState<MyApp> {
   }
 
   Future<void> init() async {
-    preferences = await SharedPreferences.getInstance();
+    final int? theme = storage.theme;
 
-    final int? theme = preferences.getInt('theme');
     if (theme == 0) {
       ref.read(themeProvider.notifier).state = null;
     } else if (theme == 1) {
@@ -40,22 +40,22 @@ class _MyAppState extends ConsumerState<MyApp> {
       ref.read(themeProvider.notifier).state = Brightness.light;
     }
 
-    final bool? auto = preferences.getBool('auto');
+    final bool? auto = storage.auto;
     if (auto != null) {
       ref.read(autoProvider.notifier).state = auto;
     }
 
-    final bool? blur = preferences.getBool('blur');
+    final bool? blur = storage.blur;
     if (blur != null) {
       ref.read(blurProvider.notifier).state = blur;
     }
 
-    final String? source = preferences.getString('source');
+    final String? source = storage.source;
     if (source != null) {
       ref.read(sourceProvider.notifier).state = source;
     }
 
-    final String? target = preferences.getString('target');
+    final String? target = storage.target;
     if (target != null) {
       ref.read(targetProvider.notifier).state = target;
     }
