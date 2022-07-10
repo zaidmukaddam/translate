@@ -10,8 +10,6 @@ import '/strings.dart';
 
 Future<void> translate(
   BuildContext context,
-  String sourceKey,
-  String targetKey,
   String query,
   WidgetRef ref,
 ) async {
@@ -19,6 +17,8 @@ Future<void> translate(
     return;
   }
 
+  final String sourceKey = ref.watch(sourceProvider);
+  final String targetKey = ref.watch(targetProvider);
   ref.read(outputProvider.notifier).state = null;
   try {
     final http.Response response = await http.get(
