@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:translate/providers.dart';
 
 import '/strings.dart';
+import '/utils/system_overlay.dart';
 import 'screens/home.dart';
 
 class SplashPage extends ConsumerStatefulWidget {
@@ -16,6 +17,7 @@ class SplashPage extends ConsumerStatefulWidget {
 class SplashPageState extends ConsumerState<SplashPage> {
   @override
   Widget build(BuildContext context) {
+    updateSystemUIOverlayStyle(context);
     final Brightness? themeMode = ref.watch(themeProvider);
     return EasySplashScreen(
       logo: Image.asset(
