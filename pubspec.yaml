@@ -11,7 +11,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  arna: ^1.0.4+1
+  arna:
+    git:
+      url: https://github.com/MahanRahmati/Arna.git
+      ref: eab192fd2f8566cccba887e018c26fbc8b7d35be
   flutter_riverpod: ^2.0.0-dev.9
   http: ^0.13.4
   shared_preferences: ^2.0.15
