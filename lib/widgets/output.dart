@@ -21,7 +21,7 @@ class OutputWidget extends ConsumerWidget {
                     padding: Styles.normal,
                     child: outputText.isEmpty
                         ? Text(
-                            Strings.empty,
+                            Strings.translation,
                             style: ArnaTheme.of(context)
                                 .textTheme
                                 .body!
