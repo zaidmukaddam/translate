@@ -2,13 +2,18 @@ import 'package:arna/arna.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:translate/splash.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '/providers.dart';
+import '/splash.dart';
+import '/utils/hive.dart';
 import '/utils/storage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  registerHiveAdapters();
+  await initializeDBs();
   await SharedStorage.instance.initialize();
   runApp(const ProviderScope(child: MyApp()));
 }
