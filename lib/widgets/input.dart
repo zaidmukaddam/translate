@@ -28,6 +28,9 @@ class _InputWidgetState extends ConsumerState<InputWidget> {
         onSubmitted: (String text) =>
             translate(context, widget.controller.text, ref),
         onChanged: (String text) {
+          if (text.isEmpty) {
+            ref.read(outputProvider.notifier).state = '';
+          }
           if (autoMode) {
             _debouncer
                 .run(() => translate(context, widget.controller.text, ref));
